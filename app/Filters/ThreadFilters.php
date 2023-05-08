@@ -6,24 +6,27 @@ use App\Helpers\Channel;
 use App\Helpers\Role;
 use \App\Models\User;
 use \App\Traits\Filters as FiltersTrait;
+use Illuminate\Database\Eloquent\Builder;
 
 class ThreadFilters extends Filters
 {    
     use FiltersTrait;
 
-    public function byName($userName){        
-        
+    public function byName(string $userName): Builder
+    {        
         $user = User::where('name', $userName)->first(); // builder = Thread::class                
-        return $this->builder->where('user_id', $user->id ?? "");        
+        return $this->builder->where('user_id', $user->id);
     }
 
 
-    public function repliesCount($status){
+    public function repliesCount(int $status): Builder
+    {
         return $this->builder->where('replies_count',  $status);        
     }
 
 
-    protected function orderById($order){
+    protected function orderById(string $order): Builder
+    {
         return $this->builder->orderBy('id', $order); // e.g. 'desc'
     }
 
@@ -40,12 +43,14 @@ class ThreadFilters extends Filters
 
 
 
-    public function threadChannelId($channelId){
+    public function threadChannelId(int $channelId): Builder
+    {
         return $this->builder->where('channel_id', $channelId);
     }
 
 
-    // public function threadChannel($channelId){
+    // public function threadChannel(int $channelId): Builder
+    // {
     //     if(auth()->user()->role_id == 1){                                // Is this line a good practice?
     //         return $this->builder->where('channel_id', $channelId);
     //     }
@@ -53,7 +58,8 @@ class ThreadFilters extends Filters
     // }
 
 
-    // public function threadChannel($channelId){
+    // public function threadChannel(int $channelId): Builder
+    // {
     //     if(auth()->user()->role_id == Role::SUPER_ADMIN){                                // Is this line a good practice?
     //         return $this->builder->where('channel_id', $channelId);
     //     }
@@ -61,7 +67,8 @@ class ThreadFilters extends Filters
     // }
 
 
-    // public function threadChannel($channelId){
+    // public function threadChannel(int $channelId): Builder
+    // {
     //     if(HelperFunctions::getLoggedUserRoleId() == Role::SUPER_ADMIN){
     //         return $this->builder->where('channel_id', $channelId);
     //     }
@@ -69,7 +76,8 @@ class ThreadFilters extends Filters
     // }
 
 
-    // public function threadChannel($channelId){
+    // public function threadChannel(int $channelId): Builder
+    // {
     //     if(request()->filled('replies_count')){
     //         if((HelperFunctions::getLoggedUserRoleId() == Role::SUPER_ADMIN) && ($channelId == Channel::VIBER)){
     //             return $this->builder->where('channel_id', $channelId);

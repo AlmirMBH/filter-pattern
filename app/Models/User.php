@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\Filters as BaseFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -69,7 +71,7 @@ class User extends Authenticatable
 
 
     // Move this method to Filters trait
-    public function scopeFilter($query, $userFilters)
+    public function scopeFilter(Builder $query, BaseFilter $userFilters): Object
     {   
         return $userFilters->apply($query); // Eloquent builder based on User:class
     }

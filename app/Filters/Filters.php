@@ -1,14 +1,16 @@
 <?php
 namespace App\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
+
 abstract class Filters
 {
     protected $builder;
-    protected $filters = [];
+    
 
-    public function apply($threadBuilder)
+    public function apply(Builder $queryBuilder): Object
     {
-        $this->builder = $threadBuilder;
+        $this->builder = $queryBuilder;
 
         foreach ($this->getFilters() as $filter => $value) {    // Is this a good coding practice?            
             if (method_exists($this, $filter)){
@@ -22,7 +24,7 @@ abstract class Filters
         return $this->builder->paginate(request()->input('pagination'));
     }
 
-    protected function getFilters()
+    protected function getFilters(): array
     {
         return request()->input();
     }

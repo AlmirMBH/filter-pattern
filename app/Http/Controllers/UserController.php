@@ -8,7 +8,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {    
-    protected function getUsers(UserRequest $request) // validation
+    protected function getUsers(UserRequest $request): Object // validation
     {   
         $request->session()->put('userFilterInput', $request->input());
         $users = (new User)->filter(new UserFilters());

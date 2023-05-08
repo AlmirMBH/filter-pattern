@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Filters\ThreadFilters;
+use App\Helpers\HelperFunctions;
 use App\Http\Requests\ThreadFilterRequest;
 use App\Models\Thread;
 use App\Models\User;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class ThreadController extends Controller
 {
@@ -95,8 +97,8 @@ class ThreadController extends Controller
 
 
     // QUESTION 4=============================================================================================================================
-    protected function getThreads(ThreadFilterRequest $request) // validation
-    {   
+    protected function getThreads(ThreadFilterRequest $request): Object // validation
+    {           
         $request->session()->put('threadFilterInput', $request->input());        
         $threads = (new Thread)->filter(new ThreadFilters());
         return view('threadfilters', compact('threads'));        
